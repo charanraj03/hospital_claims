@@ -1,39 +1,41 @@
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    margin: 0; padding: 30px; color: white; min-height: 100vh;
+    background: #f0f2f5; /* Light grey background for better table contrast */
+    color: #1a202c;
+    margin: 0; padding: 20px;
 }
 
 .auth-card {
-    background: white; color: #333; padding: 40px; border-radius: 20px;
-    max-width: 400px; margin: 100px auto; text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: white; padding: 40px; border-radius: 15px;
+    max-width: 350px; margin: 80px auto; text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.input-group input {
-    width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;
-}
+.header { display: flex; justify-content: space-between; align-items: center; background: #4f46e5; color: white; padding: 10px 20px; border-radius: 12px; margin-bottom: 20px; }
 
-.auth-buttons button { width: 100%; margin: 5px 0; }
-.login-btn { background: #22c55e; }
-.signup-btn { background: #4f46e5; }
-.logout-btn { background: #ef4444; float: right; padding: 8px 15px; }
+.stats { display: flex; gap: 15px; margin-bottom: 20px; }
+.stat { flex: 1; padding: 15px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+.pending { border-bottom: 5px solid #eab308; }
+.approved { border-bottom: 5px solid #22c55e; }
+.rejected { border-bottom: 5px solid #ef4444; }
 
-.stats { display: flex; gap: 20px; margin-bottom: 25px; }
-.stat {
-    flex: 1; padding: 20px; border-radius: 15px;
-    background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
-}
-.pending { border-left: 8px solid #facc15; }
-.approved { border-left: 8px solid #22c55e; }
-.rejected { border-left: 8px solid #ef4444; }
+.card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); color: #333; }
+.input-row { display: flex; gap: 10px; flex-wrap: wrap; }
+input { padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; flex: 1; min-width: 150px; }
 
-.card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-input { padding: 10px; border-radius: 5px; border: none; margin-right: 5px; }
-button { padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.add-btn { background: #4f46e5; color: white; font-weight: bold; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+.add-btn:hover { background: #4338ca; }
 
-table { width: 100%; background: white; color: #333; border-radius: 12px; border-collapse: collapse; overflow: hidden; }
-th { background: #4f46e5; color: white; padding: 15px; text-align: left; }
-td { padding: 15px; border-bottom: 1px solid #eee; }
-tr.approvedRow { background: #f0fff4; }
-tr.rejectedRow { background: #fff5f5; }
+.tab { padding: 10px 20px; background: #e2e8f0; border: none; border-radius: 8px; cursor: pointer; margin-right: 10px; font-weight: 600; }
+.tab.active { background: #4f46e5; color: white; }
+
+table { width: 100%; background: white; border-radius: 12px; border-collapse: collapse; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+th { background: #f8fafc; color: #4a5568; padding: 15px; text-align: left; border-bottom: 2px solid #edf2f7; }
+td { padding: 15px; border-bottom: 1px solid #edf2f7; }
+
+tr.approvedRow { background: #f0fff4 !important; }
+tr.rejectedRow { background: #fff5f5 !important; }
+tr:hover { background: #f9fafb; }
+
+.status-select { padding: 6px; border-radius: 5px; border: 1px solid #cbd5e0; cursor: pointer; }
+.logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }

@@ -13,7 +13,6 @@ const auth = firebase.auth();
 let currentTab = "all";
 let unsubscribe = null;
 
-// MONITOR LOGIN STATE
 auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById("authContainer").style.display = "none";
@@ -26,7 +25,6 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-// AUTH FUNCTIONS
 function handleSignUp() {
     const email = document.getElementById("loginEmail").value;
     const pass = document.getElementById("loginPassword").value;
@@ -41,7 +39,6 @@ function handleLogin() {
 
 function handleLogout() { auth.signOut(); }
 
-// DASHBOARD FUNCTIONS
 function addClaim() {
     const user = auth.currentUser;
     const patient = document.getElementById("patientName").value;
@@ -55,7 +52,7 @@ function addClaim() {
         insuranceCompany: insurance,
         amount: Number(amount),
         status: "pending",
-        userId: user.uid,
+        userId: user.uid, // This MUST match the render query!
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
         document.getElementById("patientName").value = "";
@@ -69,15 +66,17 @@ function updateStatus(id, newStatus) {
 }
 
 function renderClaims(uid) {
+    // IMPORTANT: .where("userId", "==", uid) filters data to ONLY yours
     unsubscribe = db.collection("claims")
         .where("userId", "==", uid)
         .orderBy("createdAt", "desc")
         .onSnapshot(snapshot => {
             let html = "";
             let totals = { pending: 0, approved: 0, rejected: 0 };
+            
             snapshot.forEach(doc => {
                 const c = doc.data();
-                if (totals[c.status] !== undefined) totals[c.status] += c.amount;
+                if (totals[c.status] !== undefined) totals[c.status] += Number(c.amount || 0);
                 if (currentTab !== "all" && c.status !== currentTab) return;
 
                 html += `
@@ -85,9 +84,9 @@ function renderClaims(uid) {
                     <td>${c.patientName}</td>
                     <td>${c.insuranceCompany}</td>
                     <td>₹${c.amount}</td>
-                    <td><b>${c.status.toUpperCase()}</b></td>
+                    <td style="font-weight:bold; color:#4f46e5">${c.status.toUpperCase()}</td>
                     <td>
-                        <select onchange="updateStatus('${doc.id}', this.value)">
+                        <select class="status-select" onchange="updateStatus('${doc.id}', this.value)">
                             <option value="pending" ${c.status==='pending'?'selected':''}>Pending</option>
                             <option value="approved" ${c.status==='approved'?'selected':''}>Approve</option>
                             <option value="rejected" ${c.status==='rejected'?'selected':''}>Reject</option>
@@ -99,6 +98,11 @@ function renderClaims(uid) {
             document.getElementById("pendingTotal").innerText = "₹" + totals.pending;
             document.getElementById("approvedTotal").innerText = "₹" + totals.approved;
             document.getElementById("rejectedTotal").innerText = "₹" + totals.rejected;
+        }, err => {
+            console.error("Firestore Error:", err);
+            if (err.message.includes("index")) {
+                alert("Firebase needs a minute to build a search index. Wait 60 seconds.");
+            }
         });
 }
 

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Hospital Claims</title>
+    <title>Hospital Claims Pro</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -11,59 +9,56 @@
 </head>
 <body>
 
-    <div id="authContainer" class="auth-card">
-        <h1 class="title">🔐 Hospital Portal</h1>
-        <div class="input-group">
-            <input id="loginEmail" type="email" placeholder="Email Address">
-            <input id="loginPassword" type="password" placeholder="Password">
-        </div>
-        <div class="auth-buttons">
-            <button onclick="handleLogin()" class="login-btn">Login</button>
-            <button onclick="handleSignUp()" class="signup-btn">Create Account</button>
-        </div>
+<div id="authContainer" class="auth-card">
+    <h1 style="color: #4f46e5;">🔐 Staff Login</h1>
+    <input id="loginEmail" type="email" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button onclick="handleLogin()" style="background: #22c55e; width: 100%;">Login</button>
+    <p onclick="handleSignUp()" style="color: #667eea; cursor: pointer; margin-top: 10px;">New user? Create Account</p>
+</div>
+
+<div id="mainDashboard" style="display: none;">
+    <div class="header">
+        <h1>🏥 Claims Portal</h1>
+        <button onclick="handleLogout()" class="logout-btn">Logout</button>
     </div>
 
-    <div id="mainDashboard" style="display: none;">
-        <div class="header">
-            <h1 class="title">🏥 Your Claims</h1>
-            <button onclick="handleLogout()" class="logout-btn">Logout</button>
-        </div>
+    <div class="stats">
+        <div class="stat pending"><h3>Pending</h3><p id="pendingTotal">₹0</p></div>
+        <div class="stat approved"><h3>Approved</h3><p id="approvedTotal">₹0</p></div>
+        <div class="stat rejected"><h3>Rejected</h3><p id="rejectedTotal">₹0</p></div>
+    </div>
 
-        <div class="stats">
-            <div class="stat pending"><h3>Pending</h3><p id="pendingTotal">₹0</p></div>
-            <div class="stat approved"><h3>Approved</h3><p id="approvedTotal">₹0</p></div>
-            <div class="stat rejected"><h3>Rejected</h3><p id="rejectedTotal">₹0</p></div>
-        </div>
-
-        <div class="card">
+    <div class="card">
+        <h3>+ New Entry</h3>
+        <div class="input-row">
             <input id="patientName" placeholder="Patient Name">
-            <input id="insurance" placeholder="Insurance Company">
-            <input id="amount" type="number" placeholder="Claim Amount">
-            <button onclick="addClaim()" class="add-btn">Add Claim</button>
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('all', event)">All</button>
-            <button class="tab" onclick="showTab('approved', event)">Approved</button>
-            <button class="tab" onclick="showTab('rejected', event)">Rejected</button>
-        </div>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Patient</th>
-                        <th>Insurance</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="claimsTable"></tbody>
-            </table>
+            <input id="insurance" placeholder="Insurance">
+            <input id="amount" type="number" placeholder="Amount">
+            <button onclick="addClaim()" class="add-btn">Submit Claim</button>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('all', event)">All Records</button>
+        <button class="tab" onclick="showTab('approved', event)">Approved</button>
+        <button class="tab" onclick="showTab('rejected', event)">Rejected</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Insurance</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="claimsTable"></tbody>
+    </table>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
