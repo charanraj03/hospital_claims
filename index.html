@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Claims</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<h1 class="title">🏥 Claims Dashboard</h1>
+
+<div class="stats">
+    <div class="stat pending">
+        <h3>Pending</h3>
+        <p id="pendingTotal">₹0</p>
+    </div>
+    <div class="stat approved">
+        <h3>Approved</h3>
+        <p id="approvedTotal">₹0</p>
+    </div>
+    <div class="stat rejected">
+        <h3>Rejected</h3>
+        <p id="rejectedTotal">₹0</p>
+    </div>
+</div>
+
+<div class="card">
+    <input id="patientName" placeholder="Patient Name">
+    <input id="insurance" placeholder="Insurance">
+    <input id="amount" type="number" placeholder="Amount">
+    <button onclick="addClaim()">Add Claim</button>
+</div>
+
+<div class="tabs">
+    <button class="tab active" onclick="showTab('all', event)">All</button>
+    <button class="tab" onclick="showTab('approved', event)">Recent Approved</button>
+    <button class="tab" onclick="showTab('rejected', event)">Recent Rejected</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Insurance</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="claimsTable"></tbody>
+</table>
+
+<script src="app.js"></script>
+</body>
+</html>
